@@ -1,0 +1,37 @@
+//==== Mission Header 
+class Header
+
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 70;
+};
+
+//==== Mission Load screen
+
+onLoadName = "AM 2 Template";
+onLoadMission = "Mission Template";
+author = "hadesdaman";
+loadScreen = "logo.paa";
+
+//==== Respawn
+
+respawn = 3;
+respawndelay = 0;
+respawnOnStart = 0;
+respawnButton = 0;
+
+//==== Disable AI on start
+
+disabledAI=1;
+
+#include "taw_vd\GUI.h"
+
+//==== Cfg Functions
+
+#include "taw_vd\dialog.hpp"
+
+class CfgFunctions
+{
+	#include "taw_vd\CfgFunctions.hpp"
+};
