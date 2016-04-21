@@ -9,7 +9,7 @@ class Header
 
 //==== Mission Load screen
 
-onLoadName = "AM 2 Template";
+onLoadName = "AM2 Template";
 onLoadMission = "Mission Template";
 author = "hadesdaman";
 loadScreen = "logo.paa";

@@ -1,4 +1,5 @@
 // Config file, everything you could ever need should be configurable here.
+// If everything is set to default value, there is no performance hit at all.
 
 
 
@@ -8,7 +9,7 @@ if set to true:
 it will try to remove anything in primary or handgun weapon silencer attachment slot
 it does so every second
 */
-automatically_remove_silencers = true; 
+automatically_remove_silencers = false; 
 // default value: false
 // possible values: false, true
 
@@ -20,7 +21,7 @@ if set to true:
 it will try to remove anything in night vision slot
 it does so every second
 */
-automaticaly_remove_night_vision = true;
+automaticaly_remove_night_vision = false;
 // default value: false
 // possible values: false, true
 
@@ -40,7 +41,7 @@ it's good idea to do so on large terrains such as takistan
 or you can use it so simulate radio jamming, 
 so value of 1000 will make it seem like the radios are jammed since you would only be able to hear radios really close to you
 */
-tfar_radios_sending_distance_multiplicator = 1/1000;
+tfar_radios_sending_distance_multiplicator = 1;
 // default value: 1
 // possible values: floating point number https://community.bistudio.com/wiki/Floating_Point_Number
 
@@ -53,7 +54,7 @@ in_soldier = when player is playing as solder, not in any vehicle
 in_air_vehicles = jet, helicopters, uavs?
 in_ground_vehicle = the rest
 */
-force_first_person_camera_in_soldier = true;
+force_first_person_camera_in_soldier = false;
 force_first_person_camera_in_ground_vehicles = false;
 force_first_person_camera_in_air_vehicles = false;
 // default value: false

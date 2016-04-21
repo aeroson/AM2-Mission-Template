@@ -41,7 +41,7 @@ if(hasInterface) then {
 
 				while{true} do {
 
-					waitUntil {!isNull(player)};
+					waitUntil {!isNull(player)};					
 
 					if(automatically_remove_silencers) then {
 						_silencer = (primaryWeaponItems player) select 0;
