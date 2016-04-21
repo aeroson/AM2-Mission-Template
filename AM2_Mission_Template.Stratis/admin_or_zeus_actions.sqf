@@ -48,20 +48,37 @@ GVAR(action) = {
 	};
 
 	if(_actionName == "friend") then {
-		_actionParam_1 setFriend[_actionParam_2, 1];
+		[
+			[
+				[_actionParam_1, _actionParam_2],
+				{
+					params [
+						["_actionParam_1", nil],
+						["_actionParam_2", nil]
+					];
+					_actionParam_1 setFriend[_actionParam_2, 1];
+				}
+			]
+		, "BIS_fnc_spawn", false] call BIS_fnc_MP;
 	};
 
 	if(_actionName == "enemy") then {
-		_actionParam_1 setFriend[_actionParam_2, 0];
+		[
+			[
+				[_actionParam_1, _actionParam_2],
+				{
+					params [
+						["_actionParam_1", nil],
+						["_actionParam_2", nil]
+					];
+					_actionParam_1 setFriend[_actionParam_2, 0];
+				}
+			]
+		, "BIS_fnc_spawn", false] call BIS_fnc_MP;
 	};
 
 };
 
-/*
-
-
-
-*/
 
 GVAR(handle) = [] spawn {
 	private _diaryEntry = nil;
@@ -92,43 +109,43 @@ GVAR(handle) = [] spawn {
 						"<execute expression='[""tfar_distance"", 100] call %1'>100</execute><br />"+
 						"<execute expression='[""tfar_distance"", 1000] call %1'>1000</execute><br />"+
 						"<br />"+
-						"east<br />"+
-						"<execute expression='[""friend"", east, east] call %1'>friend to east</execute><br />"+
-						"<execute expression='[""friend"", east, west] call %1'>friend to west</execute><br />"+
-						"<execute expression='[""friend"", east, independent] call %1'>friend to independent</execute><br />"+
-						"<execute expression='[""friend"", east, civilian] call %1'>friend to civilian</execute><br />"+
-						"<execute expression='[""enemy"", east, east] call %1'>enemy to east</execute><br />"+
-						"<execute expression='[""enemy"", east, west] call %1'>enemy to west</execute><br />"+
-						"<execute expression='[""enemy"", east, independent] call %1'>enemy to independent</execute><br />"+
-						"<execute expression='[""enemy"", east, civilian] call %1'>enemy to civilian</execute><br />"+
-						"<br />"+
 						"west<br />"+
-						"<execute expression='[""friend"", west, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", west, west] call %1'>friend to west</execute><br />"+
+						"<execute expression='[""friend"", west, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", west, independent] call %1'>friend to independent</execute><br />"+
 						"<execute expression='[""friend"", west, civilian] call %1'>friend to civilian</execute><br />"+
-						"<execute expression='[""enemy"", west, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", west, west] call %1'>enemy to west</execute><br />"+
+						"<execute expression='[""enemy"", west, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", west, independent] call %1'>enemy to independent</execute><br />"+
 						"<execute expression='[""enemy"", west, civilian] call %1'>enemy to civilian</execute><br />"+
 						"<br />"+
+						"east<br />"+
+						"<execute expression='[""friend"", east, west] call %1'>friend to west</execute><br />"+
+						"<execute expression='[""friend"", east, east] call %1'>friend to east</execute><br />"+
+						"<execute expression='[""friend"", east, independent] call %1'>friend to independent</execute><br />"+
+						"<execute expression='[""friend"", east, civilian] call %1'>friend to civilian</execute><br />"+
+						"<execute expression='[""enemy"", east, west] call %1'>enemy to west</execute><br />"+
+						"<execute expression='[""enemy"", east, east] call %1'>enemy to east</execute><br />"+
+						"<execute expression='[""enemy"", east, independent] call %1'>enemy to independent</execute><br />"+
+						"<execute expression='[""enemy"", east, civilian] call %1'>enemy to civilian</execute><br />"+
+						"<br />"+
 						"independent<br />"+
-						"<execute expression='[""friend"", independent, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", independent, west] call %1'>friend to west</execute><br />"+
+						"<execute expression='[""friend"", independent, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", independent, independent] call %1'>friend to independent</execute><br />"+
 						"<execute expression='[""friend"", independent, civilian] call %1'>friend to civilian</execute><br />"+
-						"<execute expression='[""enemy"", independent, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", independent, west] call %1'>enemy to west</execute><br />"+
+						"<execute expression='[""enemy"", independent, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", independent, independent] call %1'>enemy to independent</execute><br />"+
 						"<execute expression='[""enemy"", independent, civilian] call %1'>enemy to civilian</execute><br />"+
 						"<br />"+
 						"civilian<br />"+
-						"<execute expression='[""friend"", civilian, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", civilian, west] call %1'>friend to west</execute><br />"+
+						"<execute expression='[""friend"", civilian, east] call %1'>friend to east</execute><br />"+
 						"<execute expression='[""friend"", civilian, independent] call %1'>friend to independent</execute><br />"+
 						"<execute expression='[""friend"", civilian, civilian] call %1'>friend to civilian</execute><br />"+
-						"<execute expression='[""enemy"", civilian, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", civilian, west] call %1'>enemy to west</execute><br />"+
+						"<execute expression='[""enemy"", civilian, east] call %1'>enemy to east</execute><br />"+
 						"<execute expression='[""enemy"", civilian, independent] call %1'>enemy to independent</execute><br />"+
 						"<execute expression='[""enemy"", civilian, civilian] call %1'>enemy to civilian</execute><br />"+
 						"<br />"+
