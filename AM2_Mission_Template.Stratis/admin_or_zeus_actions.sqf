@@ -101,13 +101,13 @@ GVAR(handle) = [] spawn {
 						"<execute expression='[""cleanup"", 1000] call %1'>1000m</execute><br />"+
 						"<br />"+
 						"set tfar radio transmiting distance multiplier<br />"+
-						"<execute expression='[""tfar_distance"", 0.001] call %1'>0.001</execute><br />"+
+						"<execute expression='[""tfar_distance"", 0.001] call %1'>0.001 (increases radio range)</execute><br />"+
 						"<execute expression='[""tfar_distance"", 0.01] call %1'>0.01</execute><br />"+
 						"<execute expression='[""tfar_distance"", 0.1] call %1'>0.1</execute><br />"+
 						"<execute expression='[""tfar_distance"", 1] call %1'>1 (default)</execute><br />"+
 						"<execute expression='[""tfar_distance"", 10] call %1'>10</execute><br />"+
 						"<execute expression='[""tfar_distance"", 100] call %1'>100</execute><br />"+
-						"<execute expression='[""tfar_distance"", 1000] call %1'>1000</execute><br />"+
+						"<execute expression='[""tfar_distance"", 1000] call %1'>1000 (decreases radio range)</execute><br />"+
 						"<br />"+
 						"west<br />"+
 						"<execute expression='[""friend"", west, west] call %1'>friend to west</execute><br />"+
