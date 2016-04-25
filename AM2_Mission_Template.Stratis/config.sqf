@@ -1,6 +1,4 @@
 // Config file, everything you could ever need should be configurable here.
-// If everything is set to default value, there is no performance hit at all.
-
 
 
 
@@ -59,3 +57,32 @@ force_first_person_camera_in_ground_vehicles = false;
 force_first_person_camera_in_air_vehicles = false;
 // default value: false
 // possible values: false, true
+
+
+
+
+/*
+Someone in the vehicle might have somehow team killed and his rating is below 0,
+He is now considered a team killer and hostile to AI on his side.
+Thus you can not get into same vehicle with him. 
+For example driver or commander of vehicle technically team kills his crew when it gets blown up by enemy
+and he is then considered a teamkiller (his rating is decreased) and AI will attack him.
+You can Pardon the team killer with ACE interaction.
+Or set this to true to reset his rating back to 0 if it's under 0.
+The check is performed every 10 seconds.
+*/
+prevent_negative_rating = true;
+// default value: true
+// possible values: false, true
+
+
+
+
+
+/*
+TO ADD:
+more tfar settings
+ttfar different or same encryption key
+enable/disable to pickup enemy radios
+automatic switching to side based on your uniform
+*/

@@ -32,24 +32,33 @@ if(hasInterface) then {
 		};
 
 
-		if(automatically_remove_silencers || automaticaly_remove_night_vision) then {
-
+		if(prevent_negative_rating) then {
 			[] spawn {
+				while{true} do {
+					waitUntil {
+						sleep 10;
+						!isNUll(player) && rating player < 0
+					};
+					player addRating (-(rating player));
+				};
+			};
+		};
 
+
+
+
+		if(automatically_remove_silencers || automaticaly_remove_night_vision) then {
+			[] spawn {
 				private _silencer = "";
 				private _nightVision = "";
-
 				while{true} do {
-
 					waitUntil {!isNull(player)};					
-
 					if(automatically_remove_silencers) then {
 						_silencer = (primaryWeaponItems player) select 0;
 						if(_silencer != "") then { player removePrimaryWeaponItem _silencer; };
 						_silencer = (handgunItems player) select 0;
 						if(_silencer != "") then { player removeHandgunItem _silencer; };
 					};
-
 					if(automaticaly_remove_night_vision) then {
 						_nightVision = hmd player;
 						if(_nightVision != "") then {
@@ -57,12 +66,9 @@ if(hasInterface) then {
 							player removeItem _nightVision;
 						};
 					};
-
 					sleep 1;
 				};
-
 			};
-
 		};
 
 
@@ -71,36 +77,32 @@ if(hasInterface) then {
 
 		if(force_first_person_camera_in_soldier || force_first_person_camera_in_ground_vehicles || force_first_person_camera_in_air_vehicles) then {
 			[] spawn {
-
+				private _unit;
+				private _vehicle;
 				while{true} do {
-
-					waitUntil {!isNull(player)};									
-
-					if (cameraView == "External") then {
-						private _unit = player;
-						private _vehicle = vehicle _unit;
-						if(_vehicle != _unit && !(_vehicle isKindOf "ParachuteBase")) then {
-							if(_vehicle isKindOf "Air") then {
-								if(force_first_person_camera_in_air_vehicles) then {
-									player switchCamera "Internal";
-								};
-							} else {
-								if(force_first_person_camera_in_ground_vehicles) then {
-									player switchCamera "Internal";
-								};
+					waitUntil {
+						sleep 0.0;
+						!isNUll(player) && cameraView == "External"
+					};
+					_unit = player;
+					_vehicle = vehicle _unit;
+					if(_vehicle != _unit && !(_vehicle isKindOf "ParachuteBase")) then {
+						if(_vehicle isKindOf "Air") then {
+							if(force_first_person_camera_in_air_vehicles) then {
+								player switchCamera "Internal";
 							};
 						} else {
-							if(force_first_person_camera_in_soldier) then {
+							if(force_first_person_camera_in_ground_vehicles) then {
 								player switchCamera "Internal";
 							};
 						};
+					} else {
+						if(force_first_person_camera_in_soldier) then {
+							player switchCamera "Internal";
+						};
 					};
-
-					sleep 0.1;
 				};
-
 			};
-
 		};
 
 

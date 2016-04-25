@@ -1,6 +1,5 @@
 //==== Mission Header 
 class Header
-
 {
 	gameType = Coop;
 	minPlayers = 1;
@@ -16,14 +15,14 @@ loadScreen = "logo.paa";
 
 //==== Respawn
 
-respawn = 3;
+respawn = "BASE";
 respawndelay = 0;
 respawnOnStart = 0;
 respawnButton = 0;
 
 //==== Disable AI on start
 
-disabledAI=1;
+disabledAI = 1;
 
 #include "taw_vd\GUI.h"
 
