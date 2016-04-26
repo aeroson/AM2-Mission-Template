@@ -9,4 +9,6 @@ Arma 3, 3D mission template used for most of our missions. Contains easily confi
 
 
 Also adds: useful menu for zeuses & admins, the respawn action can be used as workaround for the "3D mission zeus must respawn to work" bug.
-![Image of zeus menu](http://i.imgur.com/gB2gnV4.png)
+
+
+![Image of zeus menu](http://i.imgur.com/GP9lZgV.png)
