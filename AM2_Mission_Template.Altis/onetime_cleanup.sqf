@@ -2,7 +2,7 @@
 	
 	AUTHOR: aeroson
 	NAME: onetime_cleanup.sqf
-	VERSION: 2.1.1
+	VERSION: 2.1.2
 
 	DESCRIPTION:
 	one call deletes stuff within radius from player that is not really needed:
@@ -49,7 +49,7 @@ if("dropped" in _whatToRemove) then {
 				_deletedDroppedItems = _deletedDroppedItems+1;
 			};
 		} forEach (_pos nearObjects [_x, _radius]);
-	} forEach ["WeaponHolder","GroundWeaponHolder","WeaponHolderSimulated","TimeBombCore","SmokeShell","AGM_SpareWheel","AGM_JerryCan","AGM_SpareTrack"];
+	} forEach ["ACE_Explosives_Place","ACE_DefuseObject","WeaponHolder","GroundWeaponHolder","WeaponHolderSimulated","TimeBombCore","SmokeShell"];
 };
 
 if("misc" in _whatToRemove) then {
@@ -60,7 +60,7 @@ if("misc" in _whatToRemove) then {
 				_deletedMisc = _deletedMisc+1;
 			};
 		} forEach (_pos nearObjects [_x, _radius]);
-	} forEach ["ACE_envelope_small", "ACE_envelope_big", "CraterLong_small","CraterLong","AGM_FastRoping_Helper","#dynamicsound","#destructioneffects","#track","#particlesource"];
+	} forEach ["BagFence_base_F","CraterLong_small","CraterLong","AGM_FastRoping_Helper","#dynamicsound","#destructioneffects","#track","#particlesource"];
 };
 
 if("corpses" in _whatToRemove) then {
