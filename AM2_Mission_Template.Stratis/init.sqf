@@ -2,16 +2,16 @@ enableSaving[false,false];
 enableEnvironment false;
 
 // starts script to show all units on map for zeuses, because zeuses need to know what is going on
-execVM 'unit_markers_for_zeus.sqf';
+[] execVM 'unit_markers_for_zeus.sqf';
 
-// prevent automatic tfar LR backpack on squad leaders
+// prevent automatic LR backpack on squad leaders
 tf_no_auto_long_range_radio = true; 
 
 //helicopter fastrope
-execVM "zlt_fastrope.sqf";
+[] execVM "zlt_fastrope.sqf";
 
 // passes AI groups simulation to headless clients (HC for short), does noothing if HCs are not available, can use up to 3 HCs named HC, HC2, HC3
-execVM "passToHCs.sqf";
+[] execVM "passToHCs.sqf";
 
 // adds briefing page with useful actions, the page is only visible to admin or zeuses
 execVM "admin_or_zeus_actions.sqf";
