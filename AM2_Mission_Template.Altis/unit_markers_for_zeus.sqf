@@ -1,4 +1,24 @@
-if (!hasInterface) exitWith {}; // exit if is server  
+/*
+
+	AUTHOR: aeroson
+	NAME: unit_markers_for_zeus.sqf
+	VERSION: 1.1
+	CONTRIBUTE: https://github.com/aeroson/a3-misc
+
+	DESCRIPTION:
+	Zeuses by default can not see any units on map.
+	If player is zeus, this script shows all units markers on map.
+	So zeuses can now easily spawn units out of players's view.
+	Has standard colors for each side.
+	AI units have no name, player units have name.
+
+	USAGE:
+	paste into init
+	[] execVM 'unit_markers_for_zeus.sqf';
+
+*/
+	
+if (!hasInterface) exitWith {}; // exit if we have no interface to show markers on
 
 waitUntil {!isNull (findDisplay 46)};
 
@@ -33,7 +53,7 @@ _isPlayerZeus = {
 };
 
 
-_shouldCleanUp = false;
+_shouldCleanUpMarkers = false;
 
 
 while {true} do {
@@ -42,7 +62,7 @@ while {true} do {
 
 	if([] call _isPlayerZeus) then {
 		  
-		_shouldCleanUp = true;
+		_shouldCleanUpMarkers = true;
 
 		waitUntil {
 			sleep 0.025;
@@ -194,8 +214,8 @@ while {true} do {
 
 	} else {
 
-		if(_shouldCleanUp) then {
-			_shouldCleanUp = false;
+		if(_shouldCleanUpMarkers) then {
+			_shouldCleanUpMarkers = false;
 
 			_markerNumber = 1;
 			_marker = format["dum%1",_markerNumber];	

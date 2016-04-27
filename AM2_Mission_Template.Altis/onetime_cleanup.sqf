@@ -3,6 +3,7 @@
 	AUTHOR: aeroson
 	NAME: onetime_cleanup.sqf
 	VERSION: 2.1.2
+	CONTRIBUTE: https://github.com/aeroson/a3-misc
 
 	DESCRIPTION:
 	one call deletes stuff within radius from player that is not really needed:
@@ -16,29 +17,30 @@
 	where 300 is radius of cleanup, default is 1000
 	[1000,["dropped","corpses","wrecks","misc"]] execVM "onetime_cleanup.sqf";
 		
-*/
-         
+*/       
 
-private ["_start"];
-
-
-_deletedWrecks = 0;
-_deletedDroppedItems = 0;
-_deletedCorpses = 0;
-_deletedMisc = 0;
-
-_start = diag_tickTime;
-
-
-private	_pos = getPos player;
+private	_player = player;
 if(!isNil{ACE_player}) then {
-	_pos = getPos ACE_player;
+	_player = ACE_player;
 };
+
+if(isNUll(_player)) exitWith {};
 
 params [
 	["_radius", 1000, [0]],
 	["_whatToRemove", ["dropped","misc","corpses","wrecks"], [[""]]]
 ];
+
+private _deletedWrecks = 0;
+private _deletedDroppedItems = 0;
+private _deletedCorpses = 0;
+private _deletedMisc = 0;
+
+private _start = diag_tickTime;
+
+private _pos = getPos _player;
+
+private _radiusSquared = _radius * _radius;
 
 
 if("dropped" in _whatToRemove) then {
@@ -75,14 +77,13 @@ if("corpses" in _whatToRemove) then {
 if("wrecks" in _whatToRemove) then {
 	{ 	
 		if(isNull attachedTo _x) then { 	
-			if(_x distanceSqr _pos < _radius * _radius && !canMove _x ) then {
+			if(_x distanceSqr _pos < _radiusSquared && !canMove _x ) then {
 				deleteVehicle _x; 
 				_deletedWrecks = _deletedWrecks + 1;
 			};
 		};
 	} forEach vehicles;
 };
-
 
 hint format ["
 Cleanup took %1 seconds\n

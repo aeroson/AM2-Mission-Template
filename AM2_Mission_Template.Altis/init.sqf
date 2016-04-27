@@ -2,36 +2,21 @@ enableSaving[false,false];
 enableEnvironment false;
 
 // starts script to show all units on map for zeuses, because zeuses need to know what is going on
-[] execVM 'unit_markers_for_zeus.sqf';
+execVM 'unit_markers_for_zeus.sqf';
 
+// set tfar settings, default frequencies and so on
+call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
-
-tf_no_auto_long_range_radio = true; // Disables automatic distribution of backpack radios to group leaders
-TF_give_personal_radio_to_regular_soldier = false; // Enables distribution of commander radios to squadmates.
-tf_same_sw_frequencies_for_side = true; // Generates identical short range radio settings for the entire faction.
-tf_same_lr_frequencies_for_side = true; // Generates identical long range radio settings for the entire faction.
-
-
-// preset SW radio settings
-tf_freq_west = [0,7,["40","41","42","43","44","45","71","72","73"],0,-11,-1,0,"76561197995822692",false];
-tf_freq_east = tf_freq_west;
-tf_freq_guer = tf_freq_west;
-
-// preset LR radio settings
-tf_freq_west_lr = [0,7,["40","41","42","43","44","45","71","72","73","801"],0,-11,-1,0,false];
-tf_freq_east_lr = tf_freq_west_lr;
-tf_freq_guer_lr = tf_freq_west_lr;
-
-
-//helicopter fastrope
-[] execVM "zlt_fastrope.sqf";
+// helicopter fastrope
+execVM "zlt_fastrope.sqf";
 
 // passes AI groups simulation to headless clients (HC for short), does noothing if HCs are not available, can use up to 3 HCs named HC, HC2, HC3
-[] execVM "passToHCs.sqf";
+execVM "passToHCs.sqf";
 
 // adds briefing page with useful actions, the page is only visible to admin or zeuses
 execVM "admin_or_zeus_actions.sqf";
 
+execVM 'repetitive_cleanup.sqf';
 
 // load config values
 call compile preprocessFileLineNumbers "config.sqf";

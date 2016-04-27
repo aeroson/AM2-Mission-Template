@@ -1,3 +1,5 @@
+// adds briefing page with useful actions, the page is only visible to admin or zeuses
+
 #define COMPONENT taw_am2_mission_template
 
 #define QUOTE(A) #A
@@ -80,6 +82,7 @@ GVAR(action) = {
 				true;
 			', QGVAR(TP_handle), QGVAR(getPlayer)];
 			openMap true;
+			hint 'Click on map to teleport.';
 			sleep 20;
 			onMapSingleClick 'false;';
 			hint 'Teleport timed out';
@@ -103,6 +106,7 @@ GVAR(action) = {
 				true;					
 			', QGVAR(TP_handle), QGVAR(getPlayer)];
 			openMap true;
+			hint 'Click on map to teleport.';
 			sleep 20;
 			onMapSingleClick 'false;';
 			hint 'Teleport timed out';
