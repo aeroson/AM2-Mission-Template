@@ -4,9 +4,6 @@ enableEnvironment false;
 // starts script to show all units on map for zeuses, because zeuses need to know what is going on
 execVM 'unit_markers_for_zeus.sqf';
 
-// set tfar settings, default frequencies and so on
-call compile preprocessFileLineNumbers "tfar_settings.sqf";
-
 // helicopter fastrope
 execVM "zlt_fastrope.sqf";
 
@@ -16,10 +13,14 @@ execVM "passToHCs.sqf";
 // adds briefing page with useful actions, the page is only visible to admin or zeuses
 execVM "admin_or_zeus_actions.sqf";
 
-execVM 'repetitive_cleanup.sqf';
+// needs testing
+//execVM 'repetitive_cleanup.sqf';
 
 // load config values
 call compile preprocessFileLineNumbers "config.sqf";
+
+// set tfar settings, default frequencies and so on
+call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
 
 if(hasInterface) then {
@@ -28,8 +29,8 @@ if(hasInterface) then {
 
 		waitUntil {!isNull(player)};
 
-		if(tfar_radios_sending_distance_multiplicator != 1) then {
-			player setVariable ["tf_sendingDistanceMultiplicator", tfar_radios_sending_distance_multiplicator]; 
+		if(tfar_radios_distance_multiplicator != 1) then {
+			player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
 		};
 
 

@@ -83,7 +83,7 @@ GVAR(deleteThoseIndexes)=[];
 
 private ["_markArraysForCleanupAt", "_cleanupArrays"];
 
-#define IS_SANE(OBJECT) !isNil{OBJECT} && {!isNull(OBJECT)}
+#define IS_SANE(OBJECT) ((!isNil{OBJECT}) && ({!isNull(OBJECT)}))
 
 _markArraysForCleanupAt = {
 	params [
@@ -153,8 +153,8 @@ while{GVAR(isRunning)} do {
  	// if there is still alot of object to delete, slowly decrease the required distance from player
     if(count(GVAR(objectsToCleanup)) > 200) then {
     	GVAR(resetTimeIfPlayerIsWithin_multiplicator) = GVAR(resetTimeIfPlayerIsWithin_multiplicator) - 0.1;
-    	if(GVAR(resetTimeIfPlayerIsWithin_multiplicator) < 0) then {
-    		GVAR(resetTimeIfPlayerIsWithin_multiplicator) = 0;
+    	if(GVAR(resetTimeIfPlayerIsWithin_multiplicator) < 0.1) then {
+    		GVAR(resetTimeIfPlayerIsWithin_multiplicator) = 0.1;
     	};
     } else {
 		GVAR(resetTimeIfPlayerIsWithin_multiplicator) = 1;
@@ -220,11 +220,9 @@ while{GVAR(isRunning)} do {
 		_object = _x;
 		_objectIndex = _forEachIndex;
 		if(IS_SANE(_object)) then {
-			[_objectIndex] call _markArraysForCleanupAt;
-		} else {
 			if((GVAR(timesWhenToCleanup) select _objectIndex) < time) then {
 				[_objectIndex] call _markArraysForCleanupAt;
-				deleteVehicle _object; // hideBody _object; sometimes doesn't work while deleteVehicle works always
+				deleteVehicle _object; // hideBody _object; sometimes doesn't work while deleteVehicle works always (yes even on corpses)
 			} else {
 				if(GVAR(resetTimeIfPlayerNearby) select _objectIndex) then {
 					_myPos = getPosATL _object;
@@ -237,6 +235,8 @@ while{GVAR(isRunning)} do {
 					} forEach _playerPositions;
 				};
 			};
+		} else {
+			[_objectIndex] call _markArraysForCleanupAt;
 		};
 	} forEach GVAR(objectsToCleanup);
 	call _cleanupArrays;

@@ -39,7 +39,7 @@ it's good idea to do so on large terrains such as takistan
 or you can use it so simulate radio jamming, 
 so value of 1000 will make it seem like the radios are jammed since you would only be able to hear radios really close to you
 */
-tfar_radios_sending_distance_multiplicator = 1;
+tfar_radios_distance_multiplicator = 1;
 // default value: 1
 // possible values: floating point number https://community.bistudio.com/wiki/Floating_Point_Number
 
