@@ -7,6 +7,11 @@ Arma 3, 3D mission template used for most of our missions. Contains easily confi
 
 [Mission Development Guide](https://docs.google.com/document/d/1CDOoqvRWCXdeAd2hFE6OhHL1OiT4M5RUM4m3w2vu22M/edit?usp=sharing) - BerlinerKuchen's Guide. Read this first. Then open AM2_Mission_Template.Stratis/config.sqf and edit it according to your needs, all is explained in there.
 
+To update to latest version of scripts from this mission template, just copy paste (replace) everything except the things you have changed (probably: mission.sqm description.ext logo.paa).
+
+
+
+
 
 Also adds: useful menu for zeuses & admins, the respawn action can be used as workaround for the "3D mission zeus must respawn to work" bug.
 
