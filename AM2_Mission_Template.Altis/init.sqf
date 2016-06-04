@@ -22,10 +22,34 @@ call compile preprocessFileLineNumbers "config.sqf";
 // set tfar settings, default frequencies and so on
 call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
+	
 
+
+
+
+
+
+[] spawn {
+	
+	while{true} do {
+		sleep 60;
+		// if there is over certain number of groups (162?) you can not create new groups anymore
+		// lets delete empty groups then
+		{
+			if(local _x && count units _x == 0) then {
+				deleteGroup _x;
+				sleep 1;
+			};
+		} forEach allGroups;		
+	};
+
+};
+
+
+// player only
 if(hasInterface) then {
 
-	[] spawn {
+	[] spawn {	
 
 		waitUntil {!isNull(player)};
 		private _target = player;
@@ -170,3 +194,9 @@ if(hasInterface) then {
 	};
 
 };
+
+
+
+
+
+

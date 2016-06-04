@@ -126,7 +126,12 @@ GVAR(action) = {
 				_counter = _counter + 1;
 			};
 		} forEach allMapMarkers;
-		hint format["Moved %1 marker(s) with name pattern *%2* to your position.", _counter, _actionParam_1];
+		if(_counter > 0) then {
+			hint format["Moved %1 marker(s) with name pattern *%2* to your position.", _counter, _actionParam_1];
+		} else {
+			createMarker [_actionParam_1, _toPos];
+			hint format["No marker named %1 found, created new one at your position.", _actionParam_1]; 
+		};
 	};
 
 	if(_actionName == "cleanup") then {
