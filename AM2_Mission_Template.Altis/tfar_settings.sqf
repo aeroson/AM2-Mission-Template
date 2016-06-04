@@ -1,5 +1,7 @@
 // set tfar settings, default frequencies and so on
 
+// help from https://github.com/michail-nikolaev/task-force-arma-3-radio/wiki/API:-Variables
+
 tf_no_auto_long_range_radio = true; // Disables automatic distribution of backpack radios to group leaders
 TF_give_personal_radio_to_regular_soldier = false; // Enables distribution of commander radios to squadmates.
 tf_same_sw_frequencies_for_side = true; // Generates identical short range radio settings for the entire faction.

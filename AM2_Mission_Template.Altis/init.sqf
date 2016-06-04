@@ -28,11 +28,21 @@ if(hasInterface) then {
 	[] spawn {
 
 		waitUntil {!isNull(player)};
+		private _target = player;
 
 		if(tfar_radios_distance_multiplicator != 1) then {
 			player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
 		};
 
+		if(strip_players_on_server_join) then {			
+			removeAllWeapons _target;
+			removeUniform _target;
+			removeVest _target;
+			removeBackpack _target;
+			removeGoggles _target;
+			removeHeadGear _target;
+			removeAllAssignedItems _target;
+		};
 
 		if(prevent_negative_rating) then {
 			[] spawn {
@@ -46,36 +56,83 @@ if(hasInterface) then {
 			};
 		};
 
+		if(automatically_remove_post_vietnam_technology) then {
+			{
+				automatically_remove_classnames pushBackUnique _x;
+			} forEach ["ACE_Cellphone","ACE_HuntIR_monitor","ACE_Kestrel4500","ItemAndroid","ACE_Altimeter"];
+			automatically_remove_gps = true;
+			automatically_remove_short_range_radio = true;
+			automatically_remove_night_vision = true;
+		};
+		if(automatically_remove_gps) then {
+			{
+				automatically_remove_classnames pushBackUnique _x;
+			} forEach ["ALIVE_Tablet","ACE_DAGR","ACE_microDAGR","B_UavTerminal","O_UavTerminal","I_UavTerminal","ItemcTab","ItemMicroDAGR","ItemGPS"];
+		};
+		if(automatically_remove_short_range_radio) then {
+			// from https://github.com/michail-nikolaev/task-force-arma-3-radio/wiki/API%3A-Classes
+			{
+				automatically_remove_classnames pushBackUnique _x;
+			} forEach ["tf_anprc152","tf_anprc148jem","tf_fadak","tf_rf7800str","tf_anprc154","tf_pnr1000a","tf_microdagr"];
+		};		
 
-
-
-		if(automatically_remove_silencers || automaticaly_remove_night_vision) then {
+		if(automatically_remove_silencers || automatically_remove_night_vision || count automatically_remove_classnames > 0 || set_no_voice_to_all_units) then {
 			[] spawn {
 				private _silencer = "";
 				private _nightVision = "";
 				while{true} do {
 					waitUntil {!isNull(player)};					
+					private _target = player;
+
 					if(automatically_remove_silencers) then {
-						_silencer = (primaryWeaponItems player) select 0;
-						if(_silencer != "") then { player removePrimaryWeaponItem _silencer; };
-						_silencer = (handgunItems player) select 0;
-						if(_silencer != "") then { player removeHandgunItem _silencer; };
+						_silencer = (primaryWeaponItems _target) select 0;
+						if(_silencer != "") then { _target removePrimaryWeaponItem _silencer; };
+						_silencer = (handgunItems _target) select 0;
+						if(_silencer != "") then { _target removeHandgunItem _silencer; };
 					};
-					if(automaticaly_remove_night_vision) then {
-						_nightVision = hmd player;
+					if(automatically_remove_night_vision) then {
+						_nightVision = hmd _target;
 						if(_nightVision != "") then {
-							player unassignItem _nightVision;
-							player removeItem _nightVision;
+							_target unassignItem _nightVision;
+							_target removeItem _nightVision;
 						};
 					};
+					if(count automatically_remove_classnames > 0) then {
+						{
+							private _classname = _x;
+							private _isClassnameRadio = false;
+							if(!isNil{TFAR_fnc_isPrototypeRadio}) then {
+								_isClassnameRadio = _classname call TFAR_fnc_isPrototypeRadio;
+							};
+
+							{
+								if(_x == _classname || {(_isClassnameRadio && {[_x, _classname] call TFAR_fnc_isSameRadio})}) then {
+									_target unassignItem _x;
+									_target removeItem _x;
+								}							
+							} forEach assignedItems _target;
+
+							{
+								if(_x == _classname || {(_isClassnameRadio && {[_x, _classname] call TFAR_fnc_isSameRadio})}) then {
+									_target removeItem _x;
+								}							
+							} forEach (uniformItems _target) + (vestItems _target) + (backpackItems _target);
+
+						} forEach automatically_remove_classnames;
+					};
+
+					if(set_no_voice_to_all_units) then {						
+						{
+							if(local _x) then {
+								_x setSpeaker "ACE_NoVoice";
+							};
+						} forEach allUnits;
+					};
+
 					sleep 1;
 				};
 			};
 		};
-
-
-
-
 
 		if(force_first_person_camera_in_soldier || force_first_person_camera_in_ground_vehicles || force_first_person_camera_in_air_vehicles) then {
 			[] spawn {

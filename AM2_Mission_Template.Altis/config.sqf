@@ -1,28 +1,49 @@
-// Config file, everything you could ever need should be configurable here.
+// Config file, everything a mission maker could ever need should be configurable here.
 
 
 
 /*
 if set to true:
-it will try to remove anything in primary or handgun weapon silencer attachment slot
+it will try to remove said items
 it does so every second
 */
-automatically_remove_silencers = false; 
+automatically_remove_night_vision = false; // nightvision in nightvision slot
+automatically_remove_gps = false; // all items that provide gps functionality (gps, dagr, tablet) in one from on another
+automatically_remove_short_range_radio = false; // short range hand held radios
+automatically_remove_post_vietnam_technology = true; // removes all above and some additional items, useful for vietnam (or pre vietnam) missions
+automatically_remove_silencers = false; // silencers on primary weapon and handgun
 // default value: false
 // possible values: false, true
 
+
+
+/*
+classnames of items to automatically remove from player's inventory and slots
+*/
+automatically_remove_classnames = [];
+// default value: []
+// possible values: array of strings
+
+
+
+/*
+units speaking can be annoying to both zeuses and players,
+if set to true all units will repeatedly be set to use the ACE_NoVoice vocie
+*/
+set_no_voice_to_all_units = true;
+// default value: false
+// possible values: false, true
 
 
 
 /*
 if set to true:
-it will try to remove anything in night vision slot
-it does so every second
+will strip players once they join server,
+to ensure they don't spawn with some items you don't want them to use
 */
-automaticaly_remove_night_vision = false;
+strip_players_on_server_join = true;
 // default value: false
 // possible values: false, true
-
 
 
 
@@ -45,7 +66,6 @@ tfar_radios_distance_multiplicator = 1;
 
 
 
-
 /*
 selective forcing of first person camera
 in_soldier = when player is playing as solder, not in any vehicle
@@ -57,7 +77,6 @@ force_first_person_camera_in_ground_vehicles = false;
 force_first_person_camera_in_air_vehicles = false;
 // default value: false
 // possible values: false, true
-
 
 
 
@@ -77,10 +96,8 @@ prevent_negative_rating = true;
 
 
 
-
-
 /*
-TO ADD:
+MAYBE TODO:
 more tfar settings
 ttfar different or same encryption key
 enable/disable to pickup enemy radios
