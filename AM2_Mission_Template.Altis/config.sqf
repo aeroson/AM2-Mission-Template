@@ -10,7 +10,7 @@ it does so every second
 automatically_remove_night_vision = false; // nightvision in nightvision slot
 automatically_remove_gps = false; // all items that provide gps functionality (gps, dagr, tablet) in one from on another
 automatically_remove_short_range_radio = false; // short range hand held radios
-automatically_remove_post_vietnam_technology = true; // removes all above and some additional items, useful for vietnam (or pre vietnam) missions
+automatically_remove_post_vietnam_technology = false; // removes all above and some additional items, useful for vietnam (or pre vietnam) missions
 automatically_remove_silencers = false; // silencers on primary weapon and handgun
 // default value: false
 // possible values: false, true
@@ -41,7 +41,7 @@ if set to true:
 will strip players once they join server,
 to ensure they don't spawn with some items you don't want them to use
 */
-strip_players_on_server_join = true;
+strip_players_on_server_join = false;
 // default value: false
 // possible values: false, true
 

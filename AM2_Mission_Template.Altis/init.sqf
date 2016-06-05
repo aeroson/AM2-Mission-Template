@@ -148,7 +148,10 @@ if(hasInterface) then {
 					if(set_no_voice_to_all_units) then {						
 						{
 							if(local _x) then {
-								_x setSpeaker "ACE_NoVoice";
+								if(speaker _x != "ACE_NoVoice") then {
+									_x setSpeaker "ACE_NoVoice";
+								};
+								_x disableConversation true;
 							};
 						} forEach allUnits;
 					};
