@@ -163,8 +163,8 @@ if(hasInterface) then {
 
 		if(force_first_person_camera_in_soldier || force_first_person_camera_in_ground_vehicles || force_first_person_camera_in_air_vehicles) then {
 			[] spawn {
-				private _unit;
-				private _vehicle;
+				private _unit = player;
+				private _vehicle = vehicle _unit;
 				while{true} do {
 					waitUntil {
 						sleep 0.0;
