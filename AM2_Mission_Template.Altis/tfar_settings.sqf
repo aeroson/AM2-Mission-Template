@@ -8,8 +8,7 @@ tf_same_sw_frequencies_for_side = true; // Generates identical short range radio
 tf_same_lr_frequencies_for_side = true; // Generates identical long range radio settings for the entire faction.
 
 
-// frequencies set according to http://puu.sh/olQI5/cf61fcb740.jpg
-
+// frequencies set according to https://docs.google.com/drawings/d/1_ywe1ZCiBhZf-5L_JSezNntL3XKrVUC9Acm7zo4NMm0
 
 /*
 0: NUMBER - Active channel
