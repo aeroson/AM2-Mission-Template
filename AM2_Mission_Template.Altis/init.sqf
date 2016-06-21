@@ -20,7 +20,7 @@ execVM "admin_or_zeus_actions.sqf";
 call compile preprocessFileLineNumbers "config.sqf";
 
 // set tfar settings, default frequencies and so on
-call compile preprocessFileLineNumbers "tfar_settings.sqf";
+//call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
 	
 
@@ -55,7 +55,7 @@ if(hasInterface) then {
 		private _target = player;
 
 		if(tfar_radios_distance_multiplicator != 1) then {
-			player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
+			//player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
 		};
 
 		if(strip_players_on_server_join) then {			
