@@ -139,12 +139,22 @@ GVAR(action) = {
 	};
 
 	if(_actionName == "tfar_distance") then {
+		hint "BLOCKED";
+		/*
 		{
 			if(isPlayer _x) then {
 				_x setVariable ["tf_receivingDistanceMultiplicator", _actionParam_1, true];
 			};
 		} forEach allUnits;
 		hint format["tf_receivingDistanceMultiplicator set to %1 for all players.", _actionParam_1];
+		*/
+	};
+	
+	if(_actionName == "tfar_reinitialize") then {
+		[{
+			[] call TFAR_fnc_TaskForceArrowheadRadioInit;
+		},"BIS_fnc_spawn",true] call BIS_fnc_MP;
+		hint "TFAR or all currently connected machines reinitialized";
 	};
 
 	if(_actionName == "friend") then {
@@ -196,6 +206,8 @@ GVAR(handle) = [] spawn {
 						"If you don't know what these do, don't click it.<br />"+
 						"<br />"+
 						"<execute expression='[""respawn""] call %1'>force respawn yourself</execute><br />"+
+						"<br />"+
+						"<execute expression='[""tfar_reinitialize""] call %1'>reinitialize TFAR on all connected machines</execute><br />"+
 						"<br />"+
 						"<execute expression='[""teleport_player""] call %1'>teleport yourself</execute><br />"+
 						"<execute expression='[""teleport_vehicle""] call %1'>teleport your vehicle (if you are in vehicle)</execute><br />"+
