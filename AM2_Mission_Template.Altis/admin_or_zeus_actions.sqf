@@ -139,15 +139,12 @@ GVAR(action) = {
 	};
 
 	if(_actionName == "tfar_distance") then {
-		hint "BLOCKED";
-		/*
 		{
 			if(isPlayer _x) then {
 				_x setVariable ["tf_receivingDistanceMultiplicator", _actionParam_1, true];
 			};
 		} forEach allUnits;
 		hint format["tf_receivingDistanceMultiplicator set to %1 for all players.", _actionParam_1];
-		*/
 	};
 	
 	if(_actionName == "tfar_reinitialize") then {
