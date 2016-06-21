@@ -221,7 +221,7 @@ GVAR(handle) = [] spawn {
 						"<execute expression='[""spawn_vehicle"", ""ACE_Track""] call %1'>ACE_Track</execute><br />"+
 						"<execute expression='[""spawn_vehicle"", ""ACE_Wheel""] call %1'>ACE_Wheel</execute><br />"+
 						"<br />"+
-						"move marker to my position<br />"+
+						"move marker to my position (creates marker if marker is nonexistent)<br />"+
 						"<execute expression='[""move_marker"", ""respawn""] call %1'>*respawn*</execute><br />"+
 						"<execute expression='[""move_marker"", ""respawn_west""] call %1'>*respawn_west*</execute><br />"+
 						"<execute expression='[""move_marker"", ""respawn_east""] call %1'>*respawn_east*</execute><br />"+
