@@ -55,7 +55,7 @@ if(hasInterface) then {
 		private _target = player;
 
 		if(tfar_radios_distance_multiplicator != 1) then {
-			//player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
+			player setVariable ["tf_receivingDistanceMultiplicator", tfar_radios_distance_multiplicator]; 
 		};
 
 		if(strip_players_on_server_join) then {			
@@ -68,14 +68,22 @@ if(hasInterface) then {
 			removeAllAssignedItems _target;
 		};
 
-		if(prevent_negative_rating) then {
+		if(prevent_negative_rating || automatically_reveal_all_players) then {
 			[] spawn {
 				while{true} do {
 					waitUntil {
 						sleep 10;
-						!isNUll(player) && rating player < 0
+						!isNUll(player)
 					};
-					player addRating (-(rating player));
+
+					if(prevent_negative_rating && rating player < 0) then {
+						player addRating (-(rating player));
+					};
+					if(automatically_reveal_all_players) then {
+						{
+							player reveal _x;
+						} forEach allPlayers;
+					};
 				};
 			};
 		};
