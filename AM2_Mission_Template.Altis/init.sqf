@@ -20,7 +20,7 @@ execVM "admin_or_zeus_actions.sqf";
 call compile preprocessFileLineNumbers "config.sqf";
 
 // set tfar settings, default frequencies and so on
-//call compile preprocessFileLineNumbers "tfar_settings.sqf";
+call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
 	
 
@@ -69,19 +69,23 @@ if(hasInterface) then {
 		};
 
 		if(prevent_negative_rating || automatically_reveal_all_players) then {
-			[] spawn {
+			taw_handle_1 = [] spawn {
 				while{true} do {
 					waitUntil {
 						sleep 10;
 						!isNUll(player)
 					};
-
 					if(prevent_negative_rating && rating player < 0) then {
 						player addRating (-(rating player));
 					};
 					if(automatically_reveal_all_players) then {
 						{
-							player reveal _x;
+							private _y = _x;
+							{
+								if(_y knowsAbout _x < 4) then {
+									_y reveal [_x, 4];
+								};
+							} forEach allPlayers;
 						} forEach allPlayers;
 					};
 				};
@@ -96,11 +100,13 @@ if(hasInterface) then {
 			automatically_remove_short_range_radio = true;
 			automatically_remove_night_vision = true;
 		};
+
 		if(automatically_remove_gps) then {
 			{
 				automatically_remove_classnames pushBackUnique _x;
 			} forEach ["ALIVE_Tablet","ACE_DAGR","ACE_microDAGR","B_UavTerminal","O_UavTerminal","I_UavTerminal","ItemcTab","ItemMicroDAGR","ItemGPS"];
 		};
+
 		if(automatically_remove_short_range_radio) then {
 			// from https://github.com/michail-nikolaev/task-force-arma-3-radio/wiki/API%3A-Classes
 			{
@@ -109,7 +115,7 @@ if(hasInterface) then {
 		};		
 
 		if(automatically_remove_silencers || automatically_remove_night_vision || count automatically_remove_classnames > 0 || set_no_voice_to_all_units) then {
-			[] spawn {
+			taw_handle_2 = [] spawn {
 				private _silencer = "";
 				private _nightVision = "";
 				while{true} do {
@@ -170,7 +176,7 @@ if(hasInterface) then {
 		};
 
 		if(force_first_person_camera_in_soldier || force_first_person_camera_in_ground_vehicles || force_first_person_camera_in_air_vehicles) then {
-			[] spawn {
+			taw_handle_3 = [] spawn {
 				private _unit = player;
 				private _vehicle = vehicle _unit;
 				while{true} do {
