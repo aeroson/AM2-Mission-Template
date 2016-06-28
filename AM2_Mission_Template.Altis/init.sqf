@@ -81,9 +81,13 @@ if(hasInterface) then {
 					if(automatically_reveal_all_players) then {
 						{
 							private _y = _x;
+							private _g = group _x;
 							{
 								if(_y knowsAbout _x < 4) then {
 									_y reveal [_x, 4];
+								};
+								if(_g knowsAbout _x < 4) then {
+									_g reveal [_x, 4];
 								};
 							} forEach allPlayers;
 						} forEach allPlayers;
