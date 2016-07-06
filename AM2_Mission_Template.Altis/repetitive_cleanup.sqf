@@ -53,24 +53,28 @@ GVAR(isRunning)=true;
 //==================================================================================//
 
 
-_ttdBodies = 1*60; // seconds to delete dead bodies (0 means don't delete)
-_ttdVehiclesDead = 5*60; // seconds to delete dead vehicles (0 means don't delete)
-_ttdVehiclesImmobile = 10*60; // seconds to delete immobile vehicles (0 means don't delete)
+#define M 1 // multiplier for times for debuging purposes
+
+private _ttdBodies = M* 1*60; // seconds to delete dead bodies (0 means don't delete)
+private _ttdVehiclesDead = M* 5*60; // seconds to delete dead vehicles (0 means don't delete)
+private _ttdVehiclesImmobile = M* 10*60; // seconds to delete immobile vehicles (0 means don't delete)
 
 GVAR(deleteClassesConfig) = [
-	[5*60, ["WeaponHolder","GroundWeaponHolder","WeaponHolderSimulated"]],
-	[60*60, ["ACE_Explosives_Place","ACE_DefuseObject","TimeBombCore"]],
-	[5*60, ["CraterLong_small","CraterLong","SmokeShell"]],
-	[20*60, ["BagFence_base_F","CraterLong_small","CraterLong","AGM_FastRoping_Helper","#dynamicsound","#destructioneffects","#track","#particlesource"]
+	// player placed or created objects that you probably want to delete once they are far enough
+	[M* 30*60, ["ACE_Explosives_Place","ACE_DefuseObject","TimeBombCore"]],
+	[M* 10*60, ["BagFence_base_F","CraterLong_small","CraterLong","SmokeShell"]],
+	[M* 5*60, ["AGM_FastRoping_Helper","#dynamicsound","#destructioneffects","#track","#particlesource"]],
+	[M* 60, ["WeaponHolder","GroundWeaponHolder","WeaponHolderSimulated"]]
 ];
 
-GVAR(resetTimeIfPlayerIsWithin) = 100; // how far away from object player needs to be so it can delete
+GVAR(resetTimeIfPlayerIsWithin) = 300; // how far away from object player needs to be so it can delete
 
 //==================================================================================//
 //=============================== CNFIGURATION end =================================//
 //==================================================================================//
 
 
+private _excludedMissionObjects = allMissionObjects ""; // those objects were placed thru editor you probably don't want to remove those
 
 
 GVAR(objectsToCleanup)=[];
@@ -81,7 +85,7 @@ GVAR(resetTimeIfPlayerNearby)=[]; // might want to do it on my own in more effec
 GVAR(deleteThoseIndexes)=[];
 
 
-private ["_markArraysForCleanupAt", "_cleanupArrays"];
+private ["_markArraysForCleanupAt", "_deleteMarkedIndexes"];
 
 #define IS_SANE(OBJECT) ((!isNil{OBJECT}) && ({!isNull(OBJECT)}))
 
@@ -92,8 +96,8 @@ _markArraysForCleanupAt = {
 	GVAR(deleteThoseIndexes) pushBack _index;
 };
 
-_cleanupArrays = {
-	GVAR(deleteThoseIndexes) sort false;
+_deleteMarkedIndexes = {
+	GVAR(deleteThoseIndexes) sort false; // delete indexes from end to start of the array
 	{
 		GVAR(objectsToCleanup) deleteAt _x;
 		GVAR(timesWhenToCleanup) deleteAt _x;
@@ -135,7 +139,7 @@ GVAR(removeFromCleanup) = {
 	params [
 		"_object"
 	];
-	if(!isNil{_object} && {!isNull(_object)}) then {
+	if(IS_SANE(_object)) then {
 		_index = GVAR(objectsToCleanup) find _object;
 		if(_index!=-1) then {
 			[_index] call _markArraysForCleanupAt;
@@ -152,7 +156,7 @@ while{GVAR(isRunning)} do {
 
  	// if there is still alot of object to delete, slowly decrease the required distance from player
     if(count(GVAR(objectsToCleanup)) > 200) then {
-    	GVAR(resetTimeIfPlayerIsWithin_multiplicator) = GVAR(resetTimeIfPlayerIsWithin_multiplicator) - 0.1;
+    	GVAR(resetTimeIfPlayerIsWithin_multiplicator) = GVAR(resetTimeIfPlayerIsWithin_multiplicator) - 0.01;
     	if(GVAR(resetTimeIfPlayerIsWithin_multiplicator) < 0.1) then {
     		GVAR(resetTimeIfPlayerIsWithin_multiplicator) = 0.1;
     	};
@@ -173,14 +177,17 @@ while{GVAR(isRunning)} do {
 				} forEach _clasesToDelete;
 			};
 	    } forEach GVAR(deleteClassesConfig);
-	} forEach allMissionObjects "";
+	} forEach (allMissionObjects "" - _excludedMissionObjects);
 
 
-	/*{ // might be causing some bugs in other scripts
+	/*
+	// deleteGroup requires the group to be local
+	{	
 		if ((count units _x)==0) then {
 			deleteGroup _x;
 		};
-	} forEach allGroups;*/
+	} forEach allGroups;
+	*/
 
 
 	if (_ttdBodies>0) then {
@@ -215,31 +222,30 @@ while{GVAR(isRunning)} do {
 
 	GVAR(resetTimeIfPlayerIsWithin)Sqr = GVAR(resetTimeIfPlayerIsWithin) * GVAR(resetTimeIfPlayerIsWithin) * GVAR(resetTimeIfPlayerIsWithin_multiplicator);
 
-	call _cleanupArrays;
+	call _deleteMarkedIndexes;
 	{
 		_object = _x;
 		_objectIndex = _forEachIndex;
 		if(IS_SANE(_object)) then {
+			if(GVAR(resetTimeIfPlayerNearby) select _objectIndex) then {
+				_myPos = getPosATL _object;
+				{
+					if(GVAR(resetTimeIfPlayerIsWithin)Sqr == 0 || {(_myPos distanceSqr _x) < GVAR(resetTimeIfPlayerIsWithin)Sqr}) exitWith {
+						_delay = GVAR(originalCleanupDelays) select _objectIndex;
+						_newTime = _delay + time;
+						GVAR(timesWhenToCleanup) set[_objectIndex, _newTime];
+					};
+				} forEach _playerPositions;
+			};
 			if((GVAR(timesWhenToCleanup) select _objectIndex) < time) then {
 				[_objectIndex] call _markArraysForCleanupAt;
 				deleteVehicle _object; // hideBody _object; sometimes doesn't work while deleteVehicle works always (yes even on corpses)
-			} else {
-				if(GVAR(resetTimeIfPlayerNearby) select _objectIndex) then {
-					_myPos = getPosATL _object;
-					{
-						if(GVAR(resetTimeIfPlayerIsWithin)Sqr == 0 || {(_myPos distanceSqr _x) < GVAR(resetTimeIfPlayerIsWithin)Sqr}) exitWith {
-							_delay = GVAR(originalCleanupDelays) select _objectIndex;
-							_newTime = _delay + time;
-							GVAR(timesWhenToCleanup) set[_objectIndex, _newTime];
-						};
-					} forEach _playerPositions;
-				};
 			};
 		} else {
 			[_objectIndex] call _markArraysForCleanupAt;
 		};
 	} forEach GVAR(objectsToCleanup);
-	call _cleanupArrays;
+	call _deleteMarkedIndexes;
 
 };
 
