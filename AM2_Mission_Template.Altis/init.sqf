@@ -2,19 +2,19 @@ enableSaving[false,false];
 enableEnvironment false;
 
 // starts script to show all units on map for zeuses, because zeuses need to know what is going on
-execVM 'unit_markers_for_zeus.sqf';
+handle_unit_markers_for_zeus = execVM 'unit_markers_for_zeus.sqf';
 
 // helicopter fastrope
-execVM "zlt_fastrope.sqf";
+handle_zlt_fastrope = execVM "zlt_fastrope.sqf";
 
 // passes AI groups simulation to headless clients (HC for short), does noothing if HCs are not available, can use up to 3 HCs named HC, HC2, HC3
-execVM "passToHCs.sqf";
+handle_passToHCs = execVM "passToHCs.sqf";
 
 // adds briefing page with useful actions, the page is only visible to admin or zeuses
-execVM "admin_or_zeus_actions.sqf";
+handle_admin_or_zeus_actions = execVM "admin_or_zeus_actions.sqf";
 
-// needs testing
-//execVM 'repetitive_cleanup.sqf';
+// cleansup stuff that is far away from players
+handle_repetitive_cleanup = execVM 'repetitive_cleanup.sqf';
 
 // load config values
 call compile preprocessFileLineNumbers "config.sqf";
@@ -29,7 +29,7 @@ call compile preprocessFileLineNumbers "tfar_settings.sqf";
 
 
 
-[] spawn {
+handle_empty_group_removal = [] spawn {
 	
 	while{true} do {
 		sleep 60;
@@ -69,7 +69,7 @@ if(hasInterface) then {
 		};
 
 		if(prevent_negative_rating || automatically_reveal_all_players) then {
-			taw_handle_1 = [] spawn {
+			handle_taw_1 = [] spawn {
 				while{true} do {
 					waitUntil {
 						sleep 10;
@@ -119,7 +119,7 @@ if(hasInterface) then {
 		};		
 
 		if(automatically_remove_silencers || automatically_remove_night_vision || count automatically_remove_classnames > 0 || set_no_voice_to_all_units) then {
-			taw_handle_2 = [] spawn {
+			handle_taw_2 = [] spawn {
 				private _silencer = "";
 				private _nightVision = "";
 				while{true} do {
@@ -180,7 +180,7 @@ if(hasInterface) then {
 		};
 
 		if(force_first_person_camera_in_soldier || force_first_person_camera_in_ground_vehicles || force_first_person_camera_in_air_vehicles) then {
-			taw_handle_3 = [] spawn {
+			handle_taw_3 = [] spawn {
 				private _unit = player;
 				private _vehicle = vehicle _unit;
 				while{true} do {
