@@ -2,7 +2,7 @@
 
 	AUTHOR: aeroson
 	NAME: repetitive_cleanup.sqf
-	VERSION: 2.1
+	VERSION: 2.2
 	CONTRIBUTE: https://github.com/aeroson/a3-misc
 
 	DESCRIPTION:
