@@ -101,7 +101,7 @@ Automatically constantly reveals all players to local player.
 See: https://github.com/michail-nikolaev/task-force-arma-3-radio/issues/1078
 Used to fix TFAR bug.
 */
-automatically_reveal_all_players = false;
+automatically_reveal_all_players = true;
 // default value: true
 // possible values: false, true
 
