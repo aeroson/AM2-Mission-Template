@@ -114,6 +114,8 @@ automatically_reveal_all_players = true;
 // default value: false
 // possible values: false, true
 
+
+
 /*
 Load arsenal loadouts on respawn and join.
 Loadouts are chosen based on tags.
@@ -121,9 +123,21 @@ Tags are role selection (and loadout) names split by the following characters: -
 Script loads the loadout that matches the greatest number of tags.
 */
 tag_based_loadouts = true;
-tag_based_loadouts_reload_on_respawn = true;
+tag_based_loadouts_reload_on_respawn = false;
 // default value: false
 // possible values: false, true
+
+
+
+/*
+Restores last player's loadout on respawn.
+Workaround until ACE3 fixes theirs.
+*/
+restore_player_loadout_on_respawn = true;
+// default value: false
+// possible values: false, true
+
+
 
 
 /*

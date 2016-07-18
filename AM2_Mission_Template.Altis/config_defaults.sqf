@@ -29,3 +29,5 @@ automatically_reveal_all_players = false;
 
 tag_based_loadouts = false;
 tag_based_loadouts_reload_on_respawn = false;
+
+restore_player_loadout_on_respawn = false;

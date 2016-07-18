@@ -59,6 +59,7 @@ if(hasInterface) then {
 	[] spawn {	
 
 		waitUntil {!isNull(player)};
+		waitUntil{!isNull findDisplay 46};
 		private _target = player;
 
 		if(tfar_radios_distance_multiplicator != 1) then {
@@ -216,6 +217,27 @@ if(hasInterface) then {
 			};
 		};
 
+
+
+		if(restore_player_loadout_on_respawn) then {
+			handle_taw_4 = [] spawn {
+				
+				lastPlayerLoadout = [];
+				player addEventHandler ["respawn", { 
+					if(count lastPlayerLoadout > 0) then {
+						player setUnitLoadout[lastPlayerLoadout, true];
+					};
+				}];
+
+				while{true} do {
+					sleep 10;
+					if(alive player) then {
+						lastPlayerLoadout = getUnitLoadout player;
+					};
+				};
+
+			};
+		};
 
 
 
