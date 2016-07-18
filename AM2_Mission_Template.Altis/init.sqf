@@ -1,6 +1,14 @@
 enableSaving[false,false];
 enableEnvironment false;
 
+// load config values
+call compile preprocessFileLineNumbers "config_defaults.sqf";
+call compile preprocessFileLineNumbers "config.sqf";
+
+// set tfar settings, default frequencies and so on
+call compile preprocessFileLineNumbers "tfar_settings.sqf";
+
+
 // starts script to show all units on map for zeuses, because zeuses need to know what is going on
 handle_unit_markers_for_zeus = execVM 'unit_markers_for_zeus.sqf';
 
@@ -14,13 +22,12 @@ handle_passToHCs = execVM "passToHCs.sqf";
 handle_admin_or_zeus_actions = execVM "admin_or_zeus_actions.sqf";
 
 // cleansup stuff that is far away from players
-handle_repetitive_cleanup = execVM 'repetitive_cleanup.sqf';
+handle_repetitive_cleanup = execVM "repetitive_cleanup.sqf";
 
-// load config values
-call compile preprocessFileLineNumbers "config.sqf";
 
-// set tfar settings, default frequencies and so on
-call compile preprocessFileLineNumbers "tfar_settings.sqf";
+if(tag_based_loadouts) then {
+	handle_tag_based_loadouts = execVM "tag_based_loadouts.sqf";
+};
 
 	
 

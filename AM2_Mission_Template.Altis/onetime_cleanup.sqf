@@ -2,7 +2,7 @@
 	
 	AUTHOR: aeroson
 	NAME: onetime_cleanup.sqf
-	VERSION: 2.1.2
+	VERSION: 2.1.3
 	CONTRIBUTE: https://github.com/aeroson/a3-misc
 
 	DESCRIPTION:
@@ -77,7 +77,7 @@ if("corpses" in _whatToRemove) then {
 if("wrecks" in _whatToRemove) then {
 	{ 	
 		if(isNull attachedTo _x) then { 	
-			if(_x distanceSqr _pos < _radiusSquared && !canMove _x ) then {
+			if(_x distanceSqr _pos < _radiusSquared && !canMove _x && {alive _x} count crew _x==0) then {
 				deleteVehicle _x; 
 				_deletedWrecks = _deletedWrecks + 1;
 			};

@@ -23,7 +23,7 @@ respawnButton = 0;
 
 //==== Disable AI on start
 
-disabledAI=1;
+disabledAI = 1;
 
 #include "taw_vd\GUI.h"
 

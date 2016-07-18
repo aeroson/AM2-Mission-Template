@@ -2,7 +2,7 @@
 
 	AUTHOR: aeroson
 	NAME: repetitive_cleanup.sqf
-	VERSION: 2.2
+	VERSION: 2.2.1
 	CONTRIBUTE: https://github.com/aeroson/a3-misc
 
 	DESCRIPTION:
@@ -193,7 +193,7 @@ while{GVAR(isRunning)} do {
 	if (_ttdBodies>0) then {
 		{
 			[_x, _ttdBodies, true, false] call GVAR(addToCleanup);
-		} forEach allDeadMen;
+		} forEach (allDeadMen - _excludedMissionObjects);
 	};
 
 	if (_ttdVehiclesDead>0) then {
@@ -201,17 +201,17 @@ while{GVAR(isRunning)} do {
 			if(_x == vehicle _x) then { // make sure its vehicle
 				[_x, _ttdVehiclesDead, true, false] call GVAR(addToCleanup);
 			};
-		} forEach (allDead - allDeadMen); // all dead without dead men == mostly dead vehicles
+		} forEach (allDead - allDeadMen - _excludedMissionObjects); // all dead without dead men == mostly dead vehicles
 	};
 
 	if (_ttdVehiclesImmobile>0) then {
 		{
-			if(!canMove _x && {alive _x}count crew _x==0) then {
+			if(!canMove _x && {alive _x} count crew _x==0) then {
 				[_x, _ttdVehiclesImmobile, true, false] call GVAR(addToCleanup);
 			} else {
 				[_x] call GVAR(removeFromCleanup);
 			};
-		} forEach vehicles;
+		} forEach (vehicles - _excludedMissionObjects);
 	};
 
 	_playerPositions = [];

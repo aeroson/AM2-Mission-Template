@@ -1,4 +1,13 @@
-// Config file, everything a mission maker could ever need should be configurable here.
+// the config file, everything a mission maker could ever need should be configurable here.
+
+
+/*
+defines the fauna (biome) of the map or mission
+is used for automatic loadout selection
+*/
+mission_biome = "wood";
+// default value: "wood"
+// possible values: "wood", "desert"
 
 
 
@@ -101,10 +110,20 @@ Automatically constantly reveals all players to local player.
 See: https://github.com/michail-nikolaev/task-force-arma-3-radio/issues/1078
 Used to fix TFAR bug.
 */
-automatically_reveal_all_players = false;
-// default value: true
+automatically_reveal_all_players = true;
+// default value: false
 // possible values: false, true
 
+/*
+Load arsenal loadouts on respawn and join.
+Loadouts are chosen based on tags.
+Tags are role selection (and loadout) names split by the following characters: -.,=/() and space
+Script loads the loadout that matches the greatest number of tags.
+*/
+tag_based_loadouts = true;
+tag_based_loadouts_reload_on_respawn = true;
+// default value: false
+// possible values: false, true
 
 
 /*
