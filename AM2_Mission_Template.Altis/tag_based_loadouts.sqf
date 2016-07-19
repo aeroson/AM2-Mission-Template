@@ -111,8 +111,12 @@ tagBasedFindVirtualArsenalLoadout = {
 
 tawPlayerLoadoutName = [player, ["taw", mission_biome]] call tagBasedFindVirtualArsenalLoadout;	
 
-playerLoadTawLoadout = {	
-	[player, [profilenamespace, tawPlayerLoadoutName]] call BIS_fnc_loadInventory;	
+playerLoadTawLoadout = {
+	if(tawPlayerLoadoutName != "") then {
+		[player, [profilenamespace, tawPlayerLoadoutName]] call BIS_fnc_loadInventory;	
+	} else {
+		[player, mission_biome] execVM "tag_based_loadouts_default.sqf";
+	};
 };
 
 call playerLoadTawLoadout;
