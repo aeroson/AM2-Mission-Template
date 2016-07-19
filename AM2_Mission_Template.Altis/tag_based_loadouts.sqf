@@ -9,7 +9,7 @@ tagBasedFindVirtualArsenalLoadout = {
 
 	params [
 		["_target", player, [player]],
-		["_defaultTags", ["taw","wood"], [[]]]
+		["_defaultTags", ["taw","woodland"], [[]]]
 	];
 
 	private _virtualArsenalLoadouts = profilenamespace getvariable ["bis_fnc_saveInventory_data", nil];

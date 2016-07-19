@@ -3,7 +3,7 @@
 
 // sets default values to config values, so other scripts dont crash if config.sqf is broken
 
-mission_biome = "wood";
+mission_biome = "woodland";
 
 automatically_remove_night_vision = false;
 automatically_remove_gps = false;
@@ -25,9 +25,9 @@ force_first_person_camera_in_air_vehicles = false;
 
 prevent_negative_rating = true;
 
-automatically_reveal_all_players = false;
+automatically_reveal_all_players = true;
 
-tag_based_loadouts = false;
+tag_based_loadouts = true;
 tag_based_loadouts_reload_on_respawn = false;
 
-restore_player_loadout_on_respawn = false;
+restore_player_loadout_on_respawn = true;

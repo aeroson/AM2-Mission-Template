@@ -5,9 +5,9 @@
 defines the fauna (biome) of the map or mission
 is used for automatic loadout selection
 */
-mission_biome = "wood";
-// default value: "wood"
-// possible values: "wood", "desert"
+mission_biome = "woodland";
+// default value: "woodland"
+// possible values: "woodland", "desert"
 
 
 
