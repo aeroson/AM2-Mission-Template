@@ -58,8 +58,12 @@ if(hasInterface) then {
 
 	[] spawn {	
 
-		waitUntil {!isNull(player)};
-		waitUntil{!isNull findDisplay 46};
+		waitUntil {
+			!isNull findDisplay 46 &&
+			!isNull player && 
+			alive player
+		};
+
 		private _target = player;
 
 		if(tfar_radios_distance_multiplicator != 1) then {
@@ -193,8 +197,8 @@ if(hasInterface) then {
 				private _vehicle = vehicle _unit;
 				while{true} do {
 					waitUntil {
-						sleep 0.0;
-						!isNUll(player) && cameraView == "External"
+						!isNUll player && 
+						cameraView == "External"
 					};
 					_unit = player;
 					_vehicle = vehicle _unit;
@@ -224,8 +228,17 @@ if(hasInterface) then {
 				
 				lastPlayerLoadout = [];
 				player addEventHandler ["respawn", { 
-					if(count lastPlayerLoadout > 0) then {
-						player setUnitLoadout[lastPlayerLoadout, true];
+					private _loadout = lastPlayerLoadout;
+					if(count _loadout > 0) then {
+						_loadout spawn {
+							waitUntil {
+								!isNull findDisplay 46 &&
+								!isNull player && 
+								alive player
+							};
+							sleep 1;
+							player setUnitLoadout[_this, true];
+						};
 					};
 				}];
 

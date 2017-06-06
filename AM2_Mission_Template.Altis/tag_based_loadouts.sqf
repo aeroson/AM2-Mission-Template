@@ -1,7 +1,10 @@
 
 if(!hasInterface) exitWith { };
-waitUntil {!isNull(player)};
-waitUntil{!isNull findDisplay 46};
+
+waitUntil {
+	!isNull findDisplay 46 &&
+	!isNull player
+};
 
 
 
@@ -34,6 +37,13 @@ tagBasedFindVirtualArsenalLoadout = {
 		} else {
 			if("platon" in _possibleTags) then {
 				_possibleTags append ["platoon"];
+			};
+		};
+		if("woodland" in _possibleTags) then {
+			_possibleTags append ["wood"];
+		} else {
+			if("wood" in _possibleTags) then {
+				_possibleTags append ["woodland"];
 			};
 		};
 		if("specialist" in _possibleTags) then {
@@ -112,6 +122,12 @@ tagBasedFindVirtualArsenalLoadout = {
 tawPlayerLoadoutName = [player, ["taw", mission_biome]] call tagBasedFindVirtualArsenalLoadout;	
 
 playerLoadTawLoadout = {
+	waitUntil {
+		!isNull findDisplay 46 &&
+		!isNull player && 
+		alive player
+	};
+	sleep 1;
 	if(tawPlayerLoadoutName != "") then {
 		[player, [profilenamespace, tawPlayerLoadoutName]] call BIS_fnc_loadInventory;	
 	} else {
@@ -119,10 +135,15 @@ playerLoadTawLoadout = {
 	};
 };
 
-call playerLoadTawLoadout;
+[] spawn playerLoadTawLoadout;
 
 if(tag_based_loadouts_reload_on_respawn) then {
-	player addEventHandler ["respawn", { call playerLoadTawLoadout; }];
+	player addEventHandler [
+		"respawn", 
+		{ 
+			[] spawn playerLoadTawLoadout; 
+		}
+	];
 };
 
 
